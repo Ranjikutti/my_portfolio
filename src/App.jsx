@@ -55,8 +55,8 @@ function App() {
     name: "Ranjith J",
     title: "Full Stack Developer & Prompt Engineer",
     social: {
-        github: "https://github.com/yourusername", // Add your GitHub link
-        linkedin: "https://linkedin.com/in/yourusername", // Add your LinkedIn link
+        github: "https://github.com/Ranjikutti", // Add your GitHub link
+        linkedin: "https://www.linkedin.com/in/ranjith-j-835ab0343?utm_source=share_via&utm_content=profile&utm_medium=member_android", // Add your LinkedIn link
     },
     contact: {
       email: "ranjikutti790@gmail.com",
