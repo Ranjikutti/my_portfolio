@@ -84,7 +84,7 @@ function App() {
     ],
     education: [
         {
-            degree: "B.Tech, Computer Science and Engineering",
+            degree: "B.Tech, Artificial Intelligence & Data Science",
             school: "Vel Tech Multi Tech, Chennai",
             duration: "Sep 2023 - Present",
             details: "Currently Pursuing. CGPA: 7.63"
