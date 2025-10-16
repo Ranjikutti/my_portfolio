@@ -1,16 +1,42 @@
 import React from 'react';
-// --- Animation & Icons ---
+// --- ALL PACKAGES ARE HERE ---
+import Particles from "react-tsparticles";
+import { loadFull } from "tsparticles";
+import { Tilt } from 'react-tilt';
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
-import { FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt, FaCertificate, FaFileDownload } from 'react-icons/fa';
 
-// --- Helper Components for better structure (with enhancements!) ---
+// --- Particles Component for the animated background ---
+const ParticlesComponent = () => {
+  const particlesInit = async (main) => { await loadFull(main); };
+  const particlesOptions = {
+    background: { color: { value: "#111827" } },
+    fpsLimit: 60,
+    interactivity: {
+      events: { onHover: { enable: true, mode: "repulse" }, resize: true },
+      modes: { repulse: { distance: 100, duration: 0.4 } },
+    },
+    particles: {
+      color: { value: "#34D399" },
+      links: { color: "#ffffff", distance: 150, enable: true, opacity: 0.1, width: 1 },
+      collisions: { enable: true },
+      move: { direction: "none", enable: true, outModes: { default: "bounce" }, random: false, speed: 1, straight: false },
+      number: { density: { enable: true, area: 800 }, value: 50 },
+      opacity: { value: 0.3 },
+      shape: { type: "circle" },
+      size: { value: { min: 1, max: 5 } },
+    },
+    detectRetina: true,
+  };
+  return <Particles id="tsparticles" init={particlesInit} options={particlesOptions} style={{ position: 'fixed', width: '100%', height: '100%', zIndex: -1 }} />;
+};
 
+// --- Helper Components ---
 const SkillPill = ({ skill }) => (
-  // Added a subtle hover effect
   <motion.div
     className="bg-gray-700 text-white py-2 px-4 rounded-full text-sm font-medium cursor-pointer"
-    whileHover={{ scale: 1.1, backgroundColor: '#2dd4bf' /* teal-400 */ }}
+    whileHover={{ scale: 1.1, backgroundColor: '#2dd4bf' }}
     transition={{ type: 'spring', stiffness: 300 }}
   >
     {skill}
@@ -18,45 +44,65 @@ const SkillPill = ({ skill }) => (
 );
 
 const ProjectCard = ({ title, description, tech }) => (
-  // Enhanced with a glassmorphism effect and more prominent hover
-  <motion.div
-    className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg shadow-lg p-6"
-    whileHover={{ scale: 1.05, boxShadow: '0px 10px 30px rgba(45, 212, 191, 0.3)' }}
-    transition={{ type: 'spring', stiffness: 260, damping: 20 }}
-  >
-    <h3 className="text-xl font-bold text-teal-300 mb-2">{title}</h3>
-    <p className="text-gray-400 mb-4">{description}</p>
-    <div className="flex flex-wrap gap-2">
-      {tech.map(t => <span key={t} className="bg-teal-900 text-teal-300 text-xs font-semibold px-2.5 py-1 rounded-full">{t}</span>)}
-    </div>
-  </motion.div>
+  <Tilt options={{ max: 15, scale: 1.05, speed: 500, perspective: 1000, transition: true }}>
+    <motion.div
+      whileHover={{ boxShadow: '0px 15px 40px rgba(45, 212, 191, 0.4)' }}
+      transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+      className="bg-gray-800/60 backdrop-blur-sm border border-gray-700 rounded-lg shadow-lg p-6 h-full flex flex-col"
+    >
+      <div>
+        <h3 className="text-xl font-bold text-teal-300 mb-2">{title}</h3>
+        <p className="text-gray-400 mb-4">{description}</p>
+      </div>
+      <div className="flex flex-wrap gap-2 mt-auto pt-4">
+        {tech.map(t => <span key={t} className="bg-teal-900 text-teal-300 text-xs font-semibold px-2.5 py-1 rounded-full">{t}</span>)}
+      </div>
+    </motion.div>
+  </Tilt>
 );
 
-// --- NEW Navigation Component ---
+const AchievementCard = ({ title, issuer, description }) => (
+  <Tilt options={{ max: 15, scale: 1.05, speed: 500, perspective: 1000, transition: true }}>
+    <motion.div
+      whileHover={{ boxShadow: '0px 15px 40px rgba(45, 212, 191, 0.4)' }}
+      transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+      className="bg-gray-800/60 backdrop-blur-sm border border-gray-700 rounded-lg shadow-lg p-6 flex items-start gap-4 h-full"
+    >
+      <div className="text-teal-300 mt-1 flex-shrink-0"><FaCertificate size={24} /></div>
+      <div>
+        <h3 className="text-xl font-bold text-teal-300 mb-1">{title}</h3>
+        <p className="text-gray-400 font-semibold mb-3">{issuer}</p>
+        <p className="text-gray-400">{description}</p>
+      </div>
+    </motion.div>
+  </Tilt>
+);
+
+// --- Navigation Component ---
 const Navbar = () => (
-    <nav className="bg-gray-900/70 backdrop-blur-md sticky top-0 z-50 py-4">
-        <div className="max-w-4xl mx-auto flex justify-center sm:justify-between items-center px-4">
-            <a href="#home" className="text-xl font-bold text-white hidden sm:block">Ranjith J</a>
-            <div className="flex space-x-4 sm:space-x-8 text-sm">
-                <a href="#about" className="text-gray-300 hover:text-teal-300 transition-colors">About</a>
-                <a href="#skills" className="text-gray-300 hover:text-teal-300 transition-colors">Skills</a>
-                <a href="#projects" className="text-gray-300 hover:text-teal-300 transition-colors">Projects</a>
-                <a href="#contact" className="text-gray-300 hover:text-teal-300 transition-colors">Contact</a>
-            </div>
-        </div>
-    </nav>
+  <nav className="bg-gray-900/70 backdrop-blur-md sticky top-0 z-50 py-4">
+      <div className="max-w-5xl mx-auto flex justify-center sm:justify-between items-center px-4">
+          <a href="#home" className="text-xl font-bold text-white hidden sm:block">Ranjith J</a>
+          <div className="flex space-x-4 sm:space-x-8 text-sm flex-wrap justify-center">
+              <a href="#about" className="text-gray-300 hover:text-teal-300 transition-colors">About</a>
+              <a href="#skills" className="text-gray-300 hover:text-teal-300 transition-colors">Skills</a>
+              <a href="#projects" className="text-gray-300 hover:text-teal-300 transition-colors">Projects</a>
+              <a href="#achievements" className="text-gray-300 hover:text-teal-300 transition-colors">Achievements</a>
+              <a href="#contact" className="text-gray-300 hover:text-teal-300 transition-colors">Contact</a>
+          </div>
+      </div>
+  </nav>
 );
-
 
 // --- Main App Component ---
-
 function App() {
   const portfolioData = {
     name: "Ranjith J",
-    title: "Full Stack Developer & Prompt Engineer",
+    profileImage: "profile-photo.jpg", // Place your photo in the 'public' folder
+    resumePath: "Ranjith_Resume.pdf", // Place your resume in the 'public' folder
     social: {
-        github: "https://github.com/Ranjikutti", // Add your GitHub link
-        linkedin: "https://www.linkedin.com/in/ranjith-j-835ab0343?utm_source=share_via&utm_content=profile&utm_medium=member_android", // Add your LinkedIn link
+      github: "https://github.com/Ranjikutti",
+      linkedin: "https://www.linkedin.com/in/ranjith-j-835ab0343",
     },
     contact: {
       email: "ranjikutti790@gmail.com",
@@ -64,205 +110,125 @@ function App() {
       address: "Thiruvallur, Tamil Nadu",
     },
     profile: "A passionate B.Tech student at Vel Tech and a Full Stack Developer with a strong foundation in building user-friendly web interfaces using JavaScript, React, and Node.js. My internship in Artificial Intelligence and Machine Language has expanded my interests into the practical applications of AI. I am now skilling up in prompt engineering to effectively interact with and leverage large language models for creative and technical solutions. I am a dedicated problem-solver, currently developing an AI and IoT-based Smart Assistive System, and am always eager to tackle real-world challenges.",
-    skills: ["HTML & CSS", "JavaScript", "React", "Node JS", "Python", "Java", "C++", "Prompt Engineering", "Problem Solving", "Critical Thinking", "TeamWork"],
+    skills: ["HTML & CSS", "JavaScript", "React", "Node JS", "Python", "Java", "C++", "Prompt Engineering", "MS Power BI", "TeamWork"],
     projects: [
-      {
-        title: "Personal Portfolio Website",
-        description: "A self-introductory portfolio created to showcase my skills and projects, built from scratch using HTML and CSS. This project serves as a central hub for my work and professional profile.",
-        tech: ["HTML", "CSS", "React"]
-      },
-      {
-        title: "AuraLink - AI & IoT Smart Assistive System",
-        description: "Currently developing an innovative project that integrates AI and IoT to create a smart assistive system. The project aims to provide intelligent support and enhance accessibility through technology.",
-        tech: ["AI", "IoT", "System Design"]
-      },
-      {
-        title: "Freelance Web Development",
-        description: "Focused on creating responsive, user-friendly websites for clients. My work also involves part-time video editing, combining technical development with creative content creation.",
-        tech: ["HTML", "CSS", "JavaScript", "Client-side scripting"]
-      }
+        { title: "Personal Portfolio Website", description: "A self-introductory portfolio created to showcase my skills and projects, built from scratch using HTML and CSS. This project serves as a central hub for my work and professional profile.", tech: ["HTML", "CSS", "React"] },
+        { title: "AuraLink - AI & IoT Smart Assistive System", description: "Currently developing an innovative project that integrates AI and IoT to create a smart assistive system. The project aims to provide intelligent support and enhance accessibility through technology.", tech: ["AI", "IoT", "System Design"] },
+        { title: "Freelance Web Development", description: "Focused on creating responsive, user-friendly websites for clients. My work also involves part-time video editing, combining technical development with creative content creation.", tech: ["HTML", "CSS", "JavaScript", "Client-side scripting"] }
+    ],
+    achievements: [
+        { title: "Certificate of Merit in MS Power BI", issuer: "AVNL Institute of Learning, Avadi, Chennai (Ministry of Defence)", description: "Completed a 30-hour value-added program focused on data visualization, analytics, and business intelligence using MS Power BI." },
+        { title: "Exceptional Mock Interview Performance", issuer: "GeeksforGeeks Feedback Report", description: "Achieved a top score of 5/5 in Data Structures, Language Proficiency, and Technical Communication, demonstrating strong problem-solving and articulation skills." }
     ],
     education: [
-        {
-            degree: "B.Tech, Artificial Intelligence & Data Science",
-            school: "Vel Tech Multi Tech, Chennai",
-            duration: "Sep 2023 - Present",
-            details: "Currently Pursuing. CGPA: 7.63"
-        },
-        {
-            degree: "Higher Secondary Certificate",
-            school: "VIVEKA MATRIC HR, SEC, SCHOOL, Sivagiri",
-            duration: "May 2022 - April 2023",
-            details: "Passed with 80.00%"
-        }
+        { degree: "B.Tech, Artificial Intelligence & Data Science", school: "Vel Tech Multi Tech, Chennai", duration: "Sep 2023 - Present", details: "Currently Pursuing. CGPA: 7.63" },
+        { degree: "Higher Secondary Certificate", school: "VIVEKA MATRIC HR, SEC, SCHOOL, Sivagiri", duration: "May 2022 - April 2023", details: "Passed with 80.00%" }
     ],
-    internship: {
-        title: "Artificial Intelligence and Machine Learning Intern",
-        company: "Srishti Innovative Educational Services Techno Park, Trivandrum",
-        description: "Gained hands-on experience in AI and ML concepts, working on practical applications and learning from industry professionals."
-    }
+    internship: { title: "Artificial Intelligence and Machine Learning Intern", company: "Srishti Innovative Educational Services Techno Park, Trivandrum", description: "Gained hands-on experience in AI and ML concepts, working on practical applications and learning from industry professionals." }
   };
 
-  // Animation variants for Framer Motion
   const sectionVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+    hidden: { opacity: 0, y: 80 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
   };
 
   return (
-    // Added a subtle gradient background
-    <div className="bg-gray-900 bg-gradient-to-br from-gray-900 to-gray-800 text-white font-sans leading-normal tracking-wider">
-      <Navbar />
-      <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
-
-        {/* --- Header / Hero Section with Typing Animation --- */}
-        <header id="home" className="text-center py-20">
-          <motion.h1 
-            className="text-5xl font-bold text-white mb-4"
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            {portfolioData.name}
-          </motion.h1>
-          <TypeAnimation
-            sequence={[
-              'Full Stack Developer', 2000,
-              'Prompt Engineer', 2000,
-              'Creative Problem-Solver', 2000,
-            ]}
-            wrapper="p"
-            speed={50}
-            className="text-2xl text-teal-300"
-            repeat={Infinity}
-          />
-          {/* Social Icons */}
-          <motion.div 
-            className="flex justify-center space-x-6 mt-6"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <a href={portfolioData.social.github} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-teal-300 transition-colors">
-                <FaGithub size={28} />
-            </a>
-            <a href={portfolioData.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-teal-300 transition-colors">
-                <FaLinkedin size={28} />
-            </a>
-            <a href={`mailto:${portfolioData.contact.email}`} className="text-gray-400 hover:text-teal-300 transition-colors">
-                <FaEnvelope size={28} />
-            </a>
-          </motion.div>
-        </header>
-        
-        <main>
-          {/* --- Section wrapper for animations --- */}
-          <motion.section 
-            id="about" 
-            className="mb-20"
-            variants={sectionVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            <h2 className="text-3xl font-bold text-center mb-8 border-b-2 border-teal-400 pb-2">About Me</h2>
-            <p className="text-center text-lg text-gray-300">
-              {portfolioData.profile}
-            </p>
-          </motion.section>
-
-          <motion.section 
-            id="skills" 
-            className="mb-20"
-            variants={sectionVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            <h2 className="text-3xl font-bold text-center mb-8 border-b-2 border-teal-400 pb-2">My Skills</h2>
-            <div className="flex flex-wrap justify-center gap-4">
-              {portfolioData.skills.map(skill => <SkillPill key={skill} skill={skill} />)}
+    <div className="font-sans leading-normal tracking-wider text-white">
+      <ParticlesComponent />
+      <div className="relative z-10">
+        <Navbar />
+        <div className="max-w-5xl mx-auto p-4 sm:p-6 lg:p-8">
+          <header id="home" className="flex items-center justify-center min-h-screen py-20">
+            <div className="grid items-center grid-cols-1 gap-12 text-center md:grid-cols-2 md:text-left">
+              <motion.div initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.2 }}>
+                <h1 className="mb-2 text-5xl font-bold text-white md:text-6xl">{portfolioData.name}</h1>
+                <TypeAnimation
+                  sequence={[ 'Full Stack Developer', 2000, 'AI & Data Science Student', 2000, 'Creative Problem-Solver', 2000 ]}
+                  wrapper="p" speed={50} className="text-2xl text-teal-300 min-h-[3rem]" repeat={Infinity}
+                />
+                <motion.div
+                  className="flex justify-center mt-6 space-x-6 md:justify-start"
+                  variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.2, delayChildren: 0.5 } } }}
+                  initial="hidden" animate="visible"
+                >
+                  <motion.a variants={{ hidden: { y: 20, opacity: 0 }, visible: { y: 0, opacity: 1 } }} href={portfolioData.social.github} target="_blank" rel="noopener noreferrer" className="text-gray-400 transition-transform duration-300 hover:text-teal-300 hover:scale-125"><FaGithub size={28} /></motion.a>
+                  <motion.a variants={{ hidden: { y: 20, opacity: 0 }, visible: { y: 0, opacity: 1 } }} href={portfolioData.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-400 transition-transform duration-300 hover:text-teal-300 hover:scale-125"><FaLinkedin size={28} /></motion.a>
+                  <motion.a variants={{ hidden: { y: 20, opacity: 0 }, visible: { y: 0, opacity: 1 } }} href={`mailto:${portfolioData.contact.email}`} className="text-gray-400 transition-transform duration-300 hover:text-teal-300 hover:scale-125"><FaEnvelope size={28} /></motion.a>
+                </motion.div>
+                <motion.a
+                  href={portfolioData.resumePath} target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 px-6 py-3 mt-8 font-bold text-white transition-all duration-300 bg-teal-600 rounded-lg shadow-lg shadow-teal-600/30 hover:bg-teal-700 hover:scale-105"
+                  initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 1.2 }}
+                >
+                  <FaFileDownload /> View Resume
+                </motion.a>
+              </motion.div>
+              <motion.div className="flex justify-center" initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: 'spring', stiffness: 120, damping: 15, delay: 0.4 }}>
+                <img src={portfolioData.profileImage} alt="Ranjith J" className="object-cover w-64 h-64 border-4 rounded-full shadow-2xl shadow-teal-500/20 border-teal-400/50 md:w-80 md:h-80" />
+              </motion.div>
             </div>
-          </motion.section>
-
-          <motion.section 
-            id="projects" 
-            className="mb-20"
-            variants={sectionVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <h2 className="text-3xl font-bold text-center mb-8 border-b-2 border-teal-400 pb-2">Projects</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {portfolioData.projects.map(project => <ProjectCard key={project.title} {...project} />)}
-            </div>
-          </motion.section>
+          </header>
           
-          {/* Education section is intentionally left without major changes to keep it clean */}
-           <motion.section 
-            id="education" 
-            className="mb-20"
-            variants={sectionVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            <h2 className="text-3xl font-bold text-center mb-8 border-b-2 border-teal-400 pb-2">Education & Experience</h2>
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Education Cards */}
-                <div className="space-y-6">
-                    {portfolioData.education.map(edu => (
-                         <div key={edu.school} className="bg-gray-800/50 p-4 rounded-lg shadow-md">
-                           <h3 className="text-lg font-bold text-teal-300">{edu.degree}</h3>
-                           <p className="text-gray-400 font-semibold">{edu.school}</p>
-                           <p className="text-gray-500 text-sm">{edu.duration}</p>
-                           <p className="text-gray-400 mt-1">{edu.details}</p>
-                       </div>
-                    ))}
-                </div>
-                {/* Internship Card */}
-                 <div className="bg-gray-800/50 p-6 rounded-lg shadow-lg flex flex-col justify-center">
-                    <h3 className="text-xl font-bold text-teal-300">{portfolioData.internship.title}</h3>
-                    <p className="text-gray-400 font-semibold mb-2">{portfolioData.internship.company}</p>
-                    <p className="text-gray-400">{portfolioData.internship.description}</p>
-                </div>
-             </div>
-          </motion.section>
+          <main>
+            <motion.section id="about" className="mb-24" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
+              <h2 className="pb-2 mb-8 text-3xl font-bold text-center border-b-2 border-teal-400">About Me</h2>
+              <p className="max-w-3xl mx-auto text-lg text-center text-gray-300">{portfolioData.profile}</p>
+            </motion.section>
 
-          <motion.section 
-            id="contact" 
-            className="text-center"
-            variants={sectionVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-          >
-             <h2 className="text-3xl font-bold text-center mb-8 border-b-2 border-teal-400 pb-2">Get In Touch</h2>
-             <p className="text-lg text-gray-300 mb-6">I'm currently looking for new opportunities. My inbox is always open!</p>
-             <a href={`mailto:${portfolioData.contact.email}`} className="inline-block bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-8 rounded-lg transition-transform duration-300 hover:scale-105">
-               Say Hello
-             </a>
-             {/* Contact details with icons */}
-             <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 text-gray-400">
-                <div className="flex items-center gap-3">
-                    <FaPhone className="text-teal-300"/>
-                    <span>{portfolioData.contact.phone}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                    <FaMapMarkerAlt className="text-teal-300"/>
-                    <span>{portfolioData.contact.address}</span>
-                </div>
+            <motion.section id="skills" className="mb-24" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
+              <h2 className="pb-2 mb-8 text-3xl font-bold text-center border-b-2 border-teal-400">My Skills</h2>
+              <div className="flex flex-wrap justify-center max-w-3xl gap-4 mx-auto">
+                {portfolioData.skills.map(skill => <SkillPill key={skill} skill={skill} />)}
+              </div>
+            </motion.section>
+
+            <motion.section id="projects" className="mb-24" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+              <h2 className="pb-2 mb-8 text-3xl font-bold text-center border-b-2 border-teal-400">Projects</h2>
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                {portfolioData.projects.map(project => <ProjectCard key={project.title} {...project} />)}
+              </div>
+            </motion.section>
+
+            <motion.section id="achievements" className="mb-24" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+              <h2 className="pb-2 mb-8 text-3xl font-bold text-center border-b-2 border-teal-400">Achievements</h2>
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+                {portfolioData.achievements.map(ach => <AchievementCard key={ach.title} {...ach} />)}
+              </div>
+            </motion.section>
+
+            <motion.section id="education" className="mb-24" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
+              <h2 className="pb-2 mb-8 text-3xl font-bold text-center border-b-2 border-teal-400">Education & Experience</h2>
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+                  <div className="space-y-6">
+                      {portfolioData.education.map(edu => (
+                          <div key={edu.school} className="p-4 rounded-lg shadow-md bg-gray-800/60"><h3 className="text-lg font-bold text-teal-300">{edu.degree}</h3><p className="font-semibold text-gray-400">{edu.school}</p><p className="text-sm text-gray-500">{edu.duration}</p><p className="mt-1 text-gray-400">{edu.details}</p></div>
+                      ))}
+                  </div>
+                  <div className="flex flex-col justify-center p-6 rounded-lg shadow-lg bg-gray-800/60">
+                      <h3 className="text-xl font-bold text-teal-300">{portfolioData.internship.title}</h3><p className="mb-2 font-semibold text-gray-400">{portfolioData.internship.company}</p><p className="text-gray-400">{portfolioData.internship.description}</p>
+                  </div>
+              </div>
+            </motion.section>
+            
+            <motion.section id="contact" className="text-center" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
+             <h2 className="pb-2 mb-8 text-3xl font-bold text-center border-b-2 border-teal-400">Get In Touch</h2>
+             <p className="mb-6 text-lg text-gray-300">I'm currently looking for new opportunities. My inbox is always open!</p>
+             <a href={`mailto:${portfolioData.contact.email}`} className="inline-block px-8 py-3 font-bold text-white transition-transform duration-300 bg-teal-600 rounded-lg hover:bg-teal-700 hover:scale-105">Say Hello</a>
+             <div className="flex flex-col items-center justify-center gap-4 mt-8 text-gray-400 sm:flex-row sm:gap-8">
+                <div className="flex items-center gap-3"><FaPhone className="text-teal-300"/><span>{portfolioData.contact.phone}</span></div>
+                <div className="flex items-center gap-3"><FaMapMarkerAlt className="text-teal-300"/><span>{portfolioData.contact.address}</span></div>
              </div>
-          </motion.section>
-        </main>
-        
-        <footer className="text-center py-8 mt-16 border-t border-gray-700">
-             <p className="text-gray-500">&copy; {new Date().getFullYear()} {portfolioData.name}. All Rights Reserved.</p>
-        </footer>
+           </motion.section>
+          </main>
+          
+          <footer className="py-8 mt-16 text-center border-t border-gray-700">
+              <p className="text-gray-500">&copy; {new Date().getFullYear()} {portfolioData.name}. All Rights Reserved.</p>
+          </footer>
+        </div>
       </div>
     </div>
   );
 }
 
 export default App;
+
