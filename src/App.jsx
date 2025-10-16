@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 // --- ALL PACKAGES ARE HERE ---
 import Particles from "react-tsparticles";
-import { loadSlim } from "tsparticles-slim"; // <-- THIS IS THE FIX for the animation bug
+import { loadSlim } from "tsparticles-slim";
 import { Tilt } from 'react-tilt';
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
@@ -102,7 +102,7 @@ function App() {
   const portfolioData = {
     name: "Ranjith J",
     profileImage: "profile-photo.jpg",
-    resumePath: "ranjith J resume.pdf",
+    resumePath: "Ranjith_Resume.pdf", // <-- FILENAME IS NOW CORRECTED
     social: {
       github: "https://github.com/Ranjikutti",
       linkedin: "https://www.linkedin.com/in/ranjith-j-835ab0343",
@@ -112,8 +112,8 @@ function App() {
       phone: "+91 9042275478",
       address: "Thiruvallur, Tamil Nadu",
     },
-    profile: "I'm a B.Tech student at Vel Tech, passionate about building user-friendly web interfaces. With strong experience in HTML, CSS, JavaScript, and React, I've created responsive websites and an Amazon affiliate site using Node.js as the backend. I love learning new technologies and am always curious to improve UI/UX designs. I'm looking for an opportunity to apply my frontend development skills and grow with real-world challenges.",
-    skills: ["HTML & CSS", "JavaScript", "React", "Node JS", "Python", "Java", "C++", "Prompt Engineering", "TeamWork", "Problem Solving", "Leadership"],
+    profile: "A passionate B.Tech student at Vel Tech and a Full Stack Developer with a strong foundation in building user-friendly web interfaces using JavaScript, React, and Node.js. My internship in Artificial Intelligence and Machine Language has expanded my interests into the practical applications of AI. I am now skilling up in prompt engineering to effectively interact with and leverage large language models for creative and technical solutions. I am a dedicated problem-solver, currently developing an AI and IoT-based Smart Assistive System, and am always eager to tackle real-world challenges.",
+    skills: ["HTML & CSS", "JavaScript", "React", "Node JS", "Python", "Java", "C++", "Prompt Engineering", "MS Power BI", "TeamWork"],
     projects: [
         { title: "Personal Portfolio Website", description: "A self-introductory portfolio to showcase my skills and projects, built with React and Node.js.", tech: ["React", "Node.js", "CSS"] },
         { title: "AuraLink - AI & IoT Smart Assistive System", description: "Developing an innovative project that integrates AI and IoT to create a smart assistive system.", tech: ["AI", "IoT", "System Design"] },
@@ -124,7 +124,7 @@ function App() {
         { title: "Exceptional Mock Interview Performance", issuer: "GeeksforGeeks Feedback Report", description: "Achieved a top score of 5/5 in Data Structures, Language Proficiency, and Technical Communication, demonstrating strong problem-solving and articulation skills." }
     ],
     education: [
-        { degree: "B.Tech, Computer Science & Engineering", school: "Vel Tech Multi Tech, Chennai", duration: "Sep 2023 - Present", details: "Currently Pursuing. CGPA: 7.63" },
+        { degree: "B.Tech, Artificial Intelligence & Data Science", school: "Vel Tech Multi Tech, Chennai", duration: "Sep 2023 - Present", details: "Currently Pursuing. CGPA: 7.63" },
         { degree: "Higher Secondary Certificate", school: "VIVEKA MATRIC HR, SEC, SCHOOL, Sivagiri", duration: "May 2022 - April 2023", details: "Passed with 80.00%" }
     ],
     internship: { title: "Artificial Intelligence and Machine Learning Intern", company: "Srishti Innovative Educational Services Techno Park, Trivandrum", description: "Gained hands-on experience in AI and ML concepts, working on practical applications and learning from industry professionals." }
@@ -160,7 +160,7 @@ function App() {
                 </motion.div>
                 <motion.a
                   href={portfolioData.resumePath}
-                  download="Ranjith_J_Resume.pdf" // <-- THIS MAKES THE FILE DOWNLOADABLE
+                  download="Ranjith_J_Resume.pdf"
                   className="inline-flex items-center gap-3 px-6 py-3 mt-8 font-bold text-white transition-all duration-300 bg-teal-600 rounded-lg shadow-lg shadow-teal-600/30 hover:bg-teal-700 hover:scale-105"
                   initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 1.2 }}
                 >
