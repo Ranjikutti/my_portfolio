@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 // --- ALL PACKAGES ARE HERE ---
 import Particles from "react-tsparticles";
-import { loadFull } from "tsparticles";
+import { loadSlim } from "tsparticles-slim"; // <-- THIS IS THE FIX for the animation bug
 import { Tilt } from 'react-tilt';
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
@@ -9,7 +9,10 @@ import { FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt, FaCertificat
 
 // --- Particles Component for the animated background ---
 const ParticlesComponent = () => {
-  const particlesInit = async (main) => { await loadFull(main); };
+  const particlesInit = useCallback(async (engine) => {
+    await loadSlim(engine);
+  }, []);
+
   const particlesOptions = {
     background: { color: { value: "#111827" } },
     fpsLimit: 60,
@@ -98,8 +101,8 @@ const Navbar = () => (
 function App() {
   const portfolioData = {
     name: "Ranjith J",
-    profileImage: "profile-photo.jpg", // Place your photo in the 'public' folder
-    resumePath: "Ranjith_Resume.pdf", // Place your resume in the 'public' folder
+    profileImage: "profile-photo.jpg",
+    resumePath: "ranjith J resume.pdf",
     social: {
       github: "https://github.com/Ranjikutti",
       linkedin: "https://www.linkedin.com/in/ranjith-j-835ab0343",
@@ -109,27 +112,27 @@ function App() {
       phone: "+91 9042275478",
       address: "Thiruvallur, Tamil Nadu",
     },
-    profile: "A passionate B.Tech student at Vel Tech and a Full Stack Developer with a strong foundation in building user-friendly web interfaces using JavaScript, React, and Node.js. My internship in Artificial Intelligence and Machine Language has expanded my interests into the practical applications of AI. I am now skilling up in prompt engineering to effectively interact with and leverage large language models for creative and technical solutions. I am a dedicated problem-solver, currently developing an AI and IoT-based Smart Assistive System, and am always eager to tackle real-world challenges.",
-    skills: ["HTML & CSS", "JavaScript", "React", "Node JS", "Python", "Java", "C++", "Prompt Engineering", "MS Power BI", "TeamWork"],
+    profile: "I'm a B.Tech student at Vel Tech, passionate about building user-friendly web interfaces. With strong experience in HTML, CSS, JavaScript, and React, I've created responsive websites and an Amazon affiliate site using Node.js as the backend. I love learning new technologies and am always curious to improve UI/UX designs. I'm looking for an opportunity to apply my frontend development skills and grow with real-world challenges.",
+    skills: ["HTML & CSS", "JavaScript", "React", "Node JS", "Python", "Java", "C++", "Prompt Engineering", "TeamWork", "Problem Solving", "Leadership"],
     projects: [
-        { title: "Personal Portfolio Website", description: "A self-introductory portfolio created to showcase my skills and projects, built from scratch using HTML and CSS. This project serves as a central hub for my work and professional profile.", tech: ["HTML", "CSS", "React"] },
-        { title: "AuraLink - AI & IoT Smart Assistive System", description: "Currently developing an innovative project that integrates AI and IoT to create a smart assistive system. The project aims to provide intelligent support and enhance accessibility through technology.", tech: ["AI", "IoT", "System Design"] },
-        { title: "Freelance Web Development", description: "Focused on creating responsive, user-friendly websites for clients. My work also involves part-time video editing, combining technical development with creative content creation.", tech: ["HTML", "CSS", "JavaScript", "Client-side scripting"] }
+        { title: "Personal Portfolio Website", description: "A self-introductory portfolio to showcase my skills and projects, built with React and Node.js.", tech: ["React", "Node.js", "CSS"] },
+        { title: "AuraLink - AI & IoT Smart Assistive System", description: "Developing an innovative project that integrates AI and IoT to create a smart assistive system.", tech: ["AI", "IoT", "System Design"] },
+        { title: "Freelance Web Development", description: "Focused on creating responsive, user-friendly websites for clients, combined with part-time video editing.", tech: ["HTML", "CSS", "JavaScript"] }
     ],
     achievements: [
         { title: "Certificate of Merit in MS Power BI", issuer: "AVNL Institute of Learning, Avadi, Chennai (Ministry of Defence)", description: "Completed a 30-hour value-added program focused on data visualization, analytics, and business intelligence using MS Power BI." },
         { title: "Exceptional Mock Interview Performance", issuer: "GeeksforGeeks Feedback Report", description: "Achieved a top score of 5/5 in Data Structures, Language Proficiency, and Technical Communication, demonstrating strong problem-solving and articulation skills." }
     ],
     education: [
-        { degree: "B.Tech, Artificial Intelligence & Data Science", school: "Vel Tech Multi Tech, Chennai", duration: "Sep 2023 - Present", details: "Currently Pursuing. CGPA: 7.63" },
+        { degree: "B.Tech, Computer Science & Engineering", school: "Vel Tech Multi Tech, Chennai", duration: "Sep 2023 - Present", details: "Currently Pursuing. CGPA: 7.63" },
         { degree: "Higher Secondary Certificate", school: "VIVEKA MATRIC HR, SEC, SCHOOL, Sivagiri", duration: "May 2022 - April 2023", details: "Passed with 80.00%" }
     ],
     internship: { title: "Artificial Intelligence and Machine Learning Intern", company: "Srishti Innovative Educational Services Techno Park, Trivandrum", description: "Gained hands-on experience in AI and ML concepts, working on practical applications and learning from industry professionals." }
   };
 
   const sectionVariants = {
-    hidden: { opacity: 0, y: 80 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
   };
 
   return (
@@ -143,7 +146,7 @@ function App() {
               <motion.div initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.2 }}>
                 <h1 className="mb-2 text-5xl font-bold text-white md:text-6xl">{portfolioData.name}</h1>
                 <TypeAnimation
-                  sequence={[ 'Full Stack Developer', 2000, 'AI & Data Science Student', 2000, 'Creative Problem-Solver', 2000 ]}
+                  sequence={[ 'Full Stack Developer', 2000, 'AI & ML Enthusiast', 2000, 'Prompt Engineer', 2000 ]}
                   wrapper="p" speed={50} className="text-2xl text-teal-300 min-h-[3rem]" repeat={Infinity}
                 />
                 <motion.div
@@ -156,11 +159,12 @@ function App() {
                   <motion.a variants={{ hidden: { y: 20, opacity: 0 }, visible: { y: 0, opacity: 1 } }} href={`mailto:${portfolioData.contact.email}`} className="text-gray-400 transition-transform duration-300 hover:text-teal-300 hover:scale-125"><FaEnvelope size={28} /></motion.a>
                 </motion.div>
                 <motion.a
-                  href={portfolioData.resumePath} target="_blank" rel="noopener noreferrer"
+                  href={portfolioData.resumePath}
+                  download="Ranjith_J_Resume.pdf" // <-- THIS MAKES THE FILE DOWNLOADABLE
                   className="inline-flex items-center gap-3 px-6 py-3 mt-8 font-bold text-white transition-all duration-300 bg-teal-600 rounded-lg shadow-lg shadow-teal-600/30 hover:bg-teal-700 hover:scale-105"
                   initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 1.2 }}
                 >
-                  <FaFileDownload /> View Resume
+                  <FaFileDownload /> Download Resume
                 </motion.a>
               </motion.div>
               <motion.div className="flex justify-center" initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: 'spring', stiffness: 120, damping: 15, delay: 0.4 }}>
@@ -169,34 +173,34 @@ function App() {
             </div>
           </header>
           
-          <main>
-            <motion.section id="about" className="mb-24" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
+          <main className="space-y-24">
+            <motion.section id="about" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
               <h2 className="pb-2 mb-8 text-3xl font-bold text-center border-b-2 border-teal-400">About Me</h2>
               <p className="max-w-3xl mx-auto text-lg text-center text-gray-300">{portfolioData.profile}</p>
             </motion.section>
 
-            <motion.section id="skills" className="mb-24" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
+            <motion.section id="skills" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
               <h2 className="pb-2 mb-8 text-3xl font-bold text-center border-b-2 border-teal-400">My Skills</h2>
               <div className="flex flex-wrap justify-center max-w-3xl gap-4 mx-auto">
                 {portfolioData.skills.map(skill => <SkillPill key={skill} skill={skill} />)}
               </div>
             </motion.section>
 
-            <motion.section id="projects" className="mb-24" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+            <motion.section id="projects" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
               <h2 className="pb-2 mb-8 text-3xl font-bold text-center border-b-2 border-teal-400">Projects</h2>
-              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                 {portfolioData.projects.map(project => <ProjectCard key={project.title} {...project} />)}
               </div>
             </motion.section>
 
-            <motion.section id="achievements" className="mb-24" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+            <motion.section id="achievements" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
               <h2 className="pb-2 mb-8 text-3xl font-bold text-center border-b-2 border-teal-400">Achievements</h2>
               <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                 {portfolioData.achievements.map(ach => <AchievementCard key={ach.title} {...ach} />)}
               </div>
             </motion.section>
 
-            <motion.section id="education" className="mb-24" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
+            <motion.section id="education" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
               <h2 className="pb-2 mb-8 text-3xl font-bold text-center border-b-2 border-teal-400">Education & Experience</h2>
               <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                   <div className="space-y-6">
@@ -231,4 +235,3 @@ function App() {
 }
 
 export default App;
-
