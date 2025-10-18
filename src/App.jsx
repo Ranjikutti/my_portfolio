@@ -46,7 +46,8 @@ const SkillPill = ({ skill }) => (
   </motion.div>
 );
 
-const ProjectCard = ({ title, description, tech }) => (
+// --- PROJECT CARD UPDATED TO INCLUDE LIVE DEMO LINK ---
+const ProjectCard = ({ title, description, tech, liveLink }) => (
   <Tilt options={{ max: 15, scale: 1.05, speed: 500, perspective: 1000, transition: true }}>
     <motion.div
       whileHover={{ boxShadow: '0px 15px 40px rgba(45, 212, 191, 0.4)' }}
@@ -57,8 +58,14 @@ const ProjectCard = ({ title, description, tech }) => (
         <h3 className="text-xl font-bold text-teal-300 mb-2">{title}</h3>
         <p className="text-gray-400 mb-4">{description}</p>
       </div>
-      <div className="flex flex-wrap gap-2 mt-auto pt-4">
+      <div className="flex flex-wrap items-end gap-2 mt-auto pt-4">
         {tech.map(t => <span key={t} className="bg-teal-900 text-teal-300 text-xs font-semibold px-2.5 py-1 rounded-full">{t}</span>)}
+        {/* Live Demo button will only show if a link is provided */}
+        {liveLink && (
+            <a href={liveLink} target="_blank" rel="noopener noreferrer" className="ml-auto text-sm bg-teal-600 hover:bg-teal-700 text-white font-bold py-1 px-3 rounded-full transition-all">
+                Live Demo
+            </a>
+        )}
       </div>
     </motion.div>
   </Tilt>
@@ -84,16 +91,16 @@ const AchievementCard = ({ title, issuer, description }) => (
 // --- Navigation Component ---
 const Navbar = () => (
   <nav className="bg-gray-900/70 backdrop-blur-md sticky top-0 z-50 py-4">
-      <div className="max-w-5xl mx-auto flex justify-center sm:justify-between items-center px-4">
-          <a href="#home" className="text-xl font-bold text-white hidden sm:block">Ranjith J</a>
-          <div className="flex space-x-4 sm:space-x-8 text-sm flex-wrap justify-center">
-              <a href="#about" className="text-gray-300 hover:text-teal-300 transition-colors">About</a>
-              <a href="#skills" className="text-gray-300 hover:text-teal-300 transition-colors">Skills</a>
-              <a href="#projects" className="text-gray-300 hover:text-teal-300 transition-colors">Projects</a>
-              <a href="#achievements" className="text-gray-300 hover:text-teal-300 transition-colors">Achievements</a>
-              <a href="#contact" className="text-gray-300 hover:text-teal-300 transition-colors">Contact</a>
-          </div>
-      </div>
+    <div className="max-w-5xl mx-auto flex justify-center sm:justify-between items-center px-4">
+        <a href="#home" className="text-xl font-bold text-white hidden sm:block">Ranjith J</a>
+        <div className="flex space-x-4 sm:space-x-8 text-sm flex-wrap justify-center">
+            <a href="#about" className="text-gray-300 hover:text-teal-300 transition-colors">About</a>
+            <a href="#skills" className="text-gray-300 hover:text-teal-300 transition-colors">Skills</a>
+            <a href="#projects" className="text-gray-300 hover:text-teal-300 transition-colors">Projects</a>
+            <a href="#achievements" className="text-gray-300 hover:text-teal-300 transition-colors">Achievements</a>
+            <a href="#contact" className="text-gray-300 hover:text-teal-300 transition-colors">Contact</a>
+        </div>
+    </div>
   </nav>
 );
 
@@ -102,7 +109,7 @@ function App() {
   const portfolioData = {
     name: "Ranjith J",
     profileImage: "profile-photo.jpg",
-    resumePath: "Ranjith_Resume.pdf", // <-- FILENAME IS NOW CORRECTED
+    resumePath: "Ranjith_Resume.pdf",
     social: {
       github: "https://github.com/Ranjikutti",
       linkedin: "https://www.linkedin.com/in/ranjith-j-835ab0343",
@@ -110,14 +117,29 @@ function App() {
     contact: {
       email: "ranjikutti790@gmail.com",
       phone: "+91 9042275478",
-      address: "Thiruvallur, Tamil Nadu",
+      address: "Chennai, Tamil Nadu",
     },
     profile: "A passionate B.Tech student at Vel Tech and a Full Stack Developer with a strong foundation in building user-friendly web interfaces using JavaScript, React, and Node.js. My internship in Artificial Intelligence and Machine Language has expanded my interests into the practical applications of AI. I am now skilling up in prompt engineering to effectively interact with and leverage large language models for creative and technical solutions. I am a dedicated problem-solver, currently developing an AI and IoT-based Smart Assistive System, and am always eager to tackle real-world challenges.",
-    skills: ["HTML & CSS", "JavaScript", "React", "Node JS", "Python", "Java", "C++", "Prompt Engineering", "MS Power BI", "TeamWork"],
+    // --- SKILLS UPDATED ---
+    skills: ["React", "Node.js", "Express.js", "MongoDB", "JavaScript", "HTML & CSS", "Python", "Java", "JWT", "Firebase", "Prompt Engineering"],
+    // --- PROJECTS UPDATED ---
     projects: [
-        { title: "Personal Portfolio Website", description: "A self-introductory portfolio to showcase my skills and projects, built with React and Node.js.", tech: ["React", "Node.js", "CSS"] },
-        { title: "AuraLink - AI & IoT Smart Assistive System", description: "Developing an innovative project that integrates AI and IoT to create a smart assistive system.", tech: ["AI", "IoT", "System Design"] },
-        { title: "Freelance Web Development", description: "Focused on creating responsive, user-friendly websites for clients, combined with part-time video editing.", tech: ["HTML", "CSS", "JavaScript"] }
+        { 
+            title: "College Event Management Website", 
+            description: "A dynamic full-stack web app to simplify college event management. Features an admin dashboard with full CRUD control, JWT authentication, and registration management.", 
+            tech: ["React", "Node.js", "Express.js", "MongoDB", "JWT", "Firebase"],
+            liveLink: "https://college-event-website-5ebf5.web.app" 
+        },
+        { 
+            title: "AuraLink - AI & IoT Smart Assistive System", 
+            description: "Developing an innovative project that integrates AI and IoT to create a smart assistive system to enhance accessibility through technology.", 
+            tech: ["AI", "IoT", "System Design"] 
+        },
+        { 
+            title: "Personal Portfolio Website", 
+            description: "A self-introductory portfolio built from scratch to showcase my skills and projects, serving as a central hub for my work.", 
+            tech: ["React", "Framer Motion", "TailwindCSS"]
+        }
     ],
     achievements: [
         { title: "Certificate of Merit in MS Power BI", issuer: "AVNL Institute of Learning, Avadi, Chennai (Ministry of Defence)", description: "Completed a 30-hour value-added program focused on data visualization, analytics, and business intelligence using MS Power BI." },
@@ -188,7 +210,7 @@ function App() {
 
             <motion.section id="projects" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
               <h2 className="pb-2 mb-8 text-3xl font-bold text-center border-b-2 border-teal-400">Projects</h2>
-              <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {portfolioData.projects.map(project => <ProjectCard key={project.title} {...project} />)}
               </div>
             </motion.section>
@@ -205,7 +227,7 @@ function App() {
               <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                   <div className="space-y-6">
                       {portfolioData.education.map(edu => (
-                          <div key={edu.school} className="p-4 rounded-lg shadow-md bg-gray-800/60"><h3 className="text-lg font-bold text-teal-300">{edu.degree}</h3><p className="font-semibold text-gray-400">{edu.school}</p><p className="text-sm text-gray-500">{edu.duration}</p><p className="mt-1 text-gray-400">{edu.details}</p></div>
+                           <div key={edu.school} className="p-4 rounded-lg shadow-md bg-gray-800/60"><h3 className="text-lg font-bold text-teal-300">{edu.degree}</h3><p className="font-semibold text-gray-400">{edu.school}</p><p className="text-sm text-gray-500">{edu.duration}</p><p className="mt-1 text-gray-400">{edu.details}</p></div>
                       ))}
                   </div>
                   <div className="flex flex-col justify-center p-6 rounded-lg shadow-lg bg-gray-800/60">
@@ -226,7 +248,7 @@ function App() {
           </main>
           
           <footer className="py-8 mt-16 text-center border-t border-gray-700">
-              <p className="text-gray-500">&copy; {new Date().getFullYear()} {portfolioData.name}. All Rights Reserved.</p>
+             <p className="text-gray-500">&copy; {new Date().getFullYear()} {portfolioData.name}. All Rights Reserved.</p>
           </footer>
         </div>
       </div>
